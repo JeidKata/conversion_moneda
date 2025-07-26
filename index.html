@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Conversor de Moneda</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            padding: 2rem;
+            max-width: 500px;
+            margin: auto;
+        }
+
+        label,
+        select,
+        input {
+            display: block;
+            margin: 0.5rem 0;
+            width: 100%;
+        }
+
+        button {
+            padding: 0.5rem;
+            background: #0078d4;
+            color: white;
+            border: none;
+            cursor:
+                pointer;
+        }
+
+        #resultado {
+            margin-top: 1rem;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Conversor de Moneda</h1>
+    <label>Monto:
+        <input type="number" id="monto" placeholder="Ej. 100" />
+    </label>
+    <label>Moneda origen:
+        <select id="origen">
+            <option value="USD">USD</option>
+            <option value="EUR">EUR</option>
+            <option value="COP">COP</option>
+        </select>
+    </label>
+    <label>Moneda destino:
+        <select id="destino">
+            <option value="USD">USD</option>
+            <option value="EUR">EUR</option>
+            <option value="COP">COP</option>
+        </select>
+    </label>
+    <button onclick="convertir()">Convertir</button>
+    <div id="resultado"></div>
+    <script>
+        async function convertir() {
+            const monto = document.getElementById('monto').value;
+            const origen = document.getElementById('origen').value;
+            const destino = document.getElementById('destino').value;
+            const url = `https://conversor1-fx-hmhrewedafeghxgb.canadacentral-01.azurewebsites.net//api/convertirmoneda?monto=${monto}&moneda_origen=${origen}&moneda_destino=${destino}`;
+            try {
+                const res = await fetch(url);
+                const texto = await res.text();
+                document.getElementById('resultado').innerText = texto;
+            } catch (err) {
+                document.getElementById('resultado').innerText = 'Error al contactar la API';
+            }
+        }
+    </script>
+</body>
+
+</html>
